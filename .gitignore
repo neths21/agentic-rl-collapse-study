@@ -1,0 +1,22 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+env/
+venv/
+agentic_rl/
+
+# Logs
+logs/
+
+# Trained models
+*.zip
+models/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
