@@ -25,7 +25,7 @@ model = PPO(
     tensorboard_log="./logs/"
 )
 
-model.learn(total_timesteps=100000)
+model.learn(total_timesteps=500000)
 
 model.save("ppo_llama3_reward")
 
