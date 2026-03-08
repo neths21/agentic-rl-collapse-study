@@ -11,7 +11,7 @@ env = gym.make("MiniGrid-DoorKey-8x8-v0", render_mode="human")
 env = ImgObsWrapper(env)
 
 # Load trained model
-model = PPO.load("ppo_doorkey")
+model = PPO.load("ppo_llama3_reward")
 
 obs, info = env.reset()
 

@@ -5,7 +5,7 @@ from stable_baselines3 import PPO
 env = gym.make("MiniGrid-DoorKey-8x8-v0")
 env = ImgObsWrapper(env)
 
-model = PPO.load("ppo_doorkey")
+model = PPO.load("ppo_llama3_reward")
 
 episodes = 50
 
@@ -22,7 +22,7 @@ for ep in range(episodes):
 
     while not done:
 
-        action, _ = model.predict(obs)
+        action, _ = model.predict(obs, deterministic=True)
 
         obs, reward, terminated, truncated, info = env.step(action)
 

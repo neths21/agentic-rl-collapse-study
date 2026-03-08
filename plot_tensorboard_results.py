@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Episode Length
-length = pd.read_csv("results/PPO_1.csv")
+length = pd.read_csv("results/PPO_3.csv")
 
 plt.figure(figsize=(8,5))
 plt.plot(length["Step"], length["Value"])
@@ -14,7 +14,7 @@ plt.tight_layout()
 plt.savefig("episode_length_curve.png", dpi=300)
 
 # Episode Reward
-reward = pd.read_csv("results/PPO_2.csv")
+reward = pd.read_csv("results/PPO_4.csv")
 
 plt.figure(figsize=(8,5))
 plt.plot(reward["Step"], reward["Value"])
