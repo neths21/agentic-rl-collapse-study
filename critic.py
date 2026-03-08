@@ -1,39 +1,71 @@
 import ollama
 
+# Mapping of MiniGrid actions to text
+ACTION_MEANING = {
+    0: "turn left",
+    1: "turn right",
+    2: "move forward",
+    3: "pick up object",
+    4: "drop object",
+    5: "toggle door",
+    6: "done"
+}
 
-def llm_reward(prev_state, action, new_state):
+
+def llm_reward(state, action, next_state):
+    """
+    Returns:
+        +1 if LLM thinks action is helpful
+        -1 if LLM thinks action is harmful
+    """
+
+    action_text = ACTION_MEANING.get(action, "unknown action")
 
     prompt = f"""
-You are evaluating progress in a reinforcement learning task.
+An agent is exploring a grid-world environment.
 
-Goal:
-1. Pick up the key
-2. Open the door
-3. Reach the goal
+The goal is usually to:
+- explore the map
+- find a key
+- open a door
+- reach a goal tile
 
-Return ONLY a number between 0 and 1 representing progress.
+The agent performed this action:
 
-Previous state: {prev_state}
-Action: {action}
-Current state: {new_state}
+{action_text}
+
+Label the action:
+
+GOOD → helps exploration or movement
+BAD → wastes time (e.g., repeated turning)
+
+Respond ONLY with:
+GOOD
+BAD
 """
 
     try:
-
         response = ollama.chat(
-            model="llama3",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+            model="phi3",   # change to llama3 if installed
+            messages=[{"role": "user", "content": prompt}],
+            options={
+                "temperature": 0
+            }
         )
 
-        text = response["message"]["content"].strip()
+        result = response["message"]["content"].strip().upper()
 
-        value = float(text)
+        # Extract first word only
+        result = result.split()[0]
 
-        value = max(0, min(1, value))
+        print("LLM decision:", result)
 
-    except:
-        value = 0.0
+        if result == "GOOD":
+            return 1
 
-    return value
+        else:
+            return -1
+
+    except Exception as e:
+        print("LLM error:", e)
+        return 0
