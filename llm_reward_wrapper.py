@@ -1,5 +1,5 @@
 from gymnasium import Wrapper
-from critic import llm_reward
+from critic1 import llm_reward
 
 
 class LLMRewardWrapper(Wrapper):

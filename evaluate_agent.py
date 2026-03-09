@@ -5,7 +5,7 @@ from stable_baselines3 import PPO
 env = gym.make("MiniGrid-DoorKey-8x8-v0")
 env = ImgObsWrapper(env)
 
-model = PPO.load("ppo_planner")
+model = PPO.load("ppo_adaptive")
 
 episodes = 50
 
